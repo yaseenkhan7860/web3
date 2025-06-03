@@ -16,8 +16,9 @@
                 <img src="logo.jpg" alt="YVIX Logo">
             </div>
             <ul class="nav-links">
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#submit-section">Submit Assignment</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="submit.html">Submit Assignment</a></li>
+                <li><a href="admin.html">Admin Login</a></li>
             </ul>
         </div>
     </nav>
@@ -27,7 +28,7 @@
         <div class="hero-content">
             <h1>Welcome to YVIX Assignment Portal</h1>
             <p>A simple and efficient way to submit and manage your assignments</p>
-            <a href="#submit-section" class="cta-button">Submit Assignment</a>
+            <a href="submit.html" class="cta-button">Submit Assignment</a>
         </div>
     </section>
 
@@ -36,9 +37,8 @@
         <div class="brief-container">
             <div class="brief-content">
                 <h2>Assignment Description</h2>
-                <p>This assignment requires you to demonstrate your understanding of web development concepts and practices. You will need to create a responsive website that showcases your skills in HTML, CSS, and JavaScript.</p>
-                <p>Your submission should include all source code files, documentation explaining your approach, and any additional resources used in the project. Make sure to follow best practices for code organization and commenting.</p>
-                <p>The deadline for this assignment is <strong>June 15, 2025</strong>. Late submissions may be subject to penalties as outlined in the course syllabus.</p>
+                <p>This project series is all about putting your skills into action—whether you love coding, designing, creating content, or exploring cutting-edge tech. Each assignment is designed to feel like a real-world challenge, giving you the chance to build something tangible while stretching your creativity. You might find yourself developing a password generator, designing a sleek app interface, producing a short tech explainer video, or even crafting memes that make fellow coders laugh. The goal isn't just to test what you've learned but to help you create work you're proud to share. Think of these as more than just tasks—they're stepping stones to building a portfolio that shows off what you can do.</p>
+                <p> We want to see your best work—clean, well-organized, and thoughtfully put together. Whether it's code, a design mockup, or a written piece, make sure it reflects your skills and effort. Most importantly, these assignments are about growth. By the end, you'll have hands-on experience, a stronger skill set, and maybe even a few projects to show off in interviews or on LinkedIn. Let's make something great!</p>
             </div>
             <div class="brief-image">
                 <img src="pro.jpg" alt="Assignment Visual">
@@ -46,93 +46,64 @@
         </div>
     </section>
 
-    <main class="submission-container">
-        <div class="submission-form">
-            <div class="form-header">
-                <h1>Submit Your Assignment</h1>
-                <p class="form-subtitle">Fill in your information and upload your assignment</p>
+    <!-- Features section -->
+    <section class="features">
+        <div class="features-container">
+            <h2>Portal Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3>Easy Submission</h3>
+                    <p>Submit your assignments with a simple form. Upload files or enter text directly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Track Progress</h3>
+                    <p>Monitor your submission status and receive feedback from instructors.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Deadline Reminders</h3>
+                    <p>Never miss a deadline with our built-in notification system.</p>
+                </div>
             </div>
-            
-            <div id="status-message" class="message" style="display: none;"></div>
-            
-            <form id="assignment-form">
-                <div class="form-section">
-                    <h2><i class="fas fa-user"></i> Personal Information</h2>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="student-name">Full Name</label>
-                            <input type="text" id="student-name" name="student_name" placeholder="Enter your full name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone_number" placeholder="Enter your phone number" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="college">College Name</label>
-                            <input type="text" id="college" name="college" placeholder="Enter your college name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="location">Location</label>
-                            <input type="text" id="location" name="location" placeholder="Enter your location" required>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-section">
-                    <h2><i class="fas fa-book"></i> Assignment Details</h2>
-                    <div class="form-group">
-                        <label for="topic">Topic</label>
-                        <select id="topic" name="topic" required>
-                            <option value="" disabled selected>Select topic</option>
-                            <!-- Topics will be loaded from API -->
-                        </select>
-                        <div id="topic-description" class="topic-description-box" style="display: none;"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="submission-type">Submission Type</label>
-                        <div class="submission-toggle">
-                            <div class="toggle-option active" data-value="text">
-                                <i class="fas fa-keyboard"></i> Text Submission
-                            </div>
-                            <div class="toggle-option" data-value="file">
-                                <i class="fas fa-file"></i> File Upload
-                            </div>
-                        </div>
-                        <input type="hidden" id="submission-type" name="submission_type" value="text">
-                    </div>
-                    
-                    <div id="text-submission" class="form-group">
-                        <label for="text-content">Your Submission</label>
-                        <textarea id="text-content" name="text_content" rows="8" placeholder="Type your assignment here..."></textarea>
-                    </div>
-                    
-                    <div id="file-submission" class="form-group" style="display: none;">
-                        <label for="file-upload">Upload File</label>
-                        <div class="file-upload-container">
-                            <input type="file" id="file-upload" name="file_upload" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
-                            <div class="file-upload-label">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <span>Drag & drop your file or click to browse</span>
-                                <small>Supported formats: PDF, DOC, DOCX, JPG, JPEG, PNG (Max 16MB)</small>
-                            </div>
-                        </div>
-                        <div id="file-preview" class="file-preview"></div>
-                    </div>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn">Submit Assignment</button>
-                </div>
-            </form>
         </div>
-    </main>
+    </section>
 
     <footer>
-        <p>&copy; 2025 YVIX. All rights reserved.</p>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="submit.html">Submit Assignment</a></li>
+                    <li><a href="admin.html">Admin Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> support@yvix.com</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 YVIX. All rights reserved.</p>
+        </div>
     </footer>
     
     <script src="app.js"></script>

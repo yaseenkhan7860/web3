@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4285f4">
+    <title>Admin Login - YVIX Assignment Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Full-width navigation bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="logo.jpg" alt="YVIX Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="submit.html">Submit Assignment</a></li>
+                <li><a href="admin.html" class="active">Admin Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page header -->
+    <section class="page-header">
+        <div class="header-content">
+            <h1>Admin Login</h1>
+            <p>Access the administrator dashboard</p>
+        </div>
+    </section>
+
+    <main class="admin-login-container">
+        <div class="login-form">
+            <div class="login-icon">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            
+            <div id="status-message" class="message" style="display: none;"></div>
+            
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-input-container">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <button type="button" class="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Login</button>
+                </div>
+            </form>
+            
+            <div class="login-footer">
+                <p>Forgot password? Contact system administrator.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="submit.html">Submit Assignment</a></li>
+                    <li><a href="admin.html">Admin Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> support@yvix.com</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 YVIX. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="admin.js"></script>
+</body>
+</html> 
