@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>HR Dashboard - YVIX Assignment Portal</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: white;
+        }
+        
+        /* Add styles for flash messages */
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: opacity 0.5s ease;
+        }
+        
+        .success {
+            background-color: rgba(52, 168, 83, 0.1);
+            border: 1px solid #34a853;
+            color: #34a853;
+        }
+        
+        .error {
+            background-color: rgba(234, 67, 53, 0.1);
+            border: 1px solid #ea4335;
+            color: #ea4335;
+        }
+        
+        .top-nav {
+            background-color: #4285f4;
+            width: 100%;
+            padding: 15px 0;
+            margin: 0;
+            position: relative;
+            overflow: visible;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 0 0;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-right: auto;
+            padding-right: -10px;
+            padding-left: 0;
+            margin-left: -80px;
+            position: relative;
+            left: -40px;
+        }
+        
+        .logo img {
+            height: 65px;
+            padding: 1px;
+            border: 1px solid #000;
+            border-radius: 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            justify-content: flex-end;
+        }
+        
+        .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .dashboard {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #757575;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+        
+        /* Topic Management Styles */
+        .topic-management {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            border-bottom: 1px solid #e9ecef;
+            margin-bottom: 30px;
+        }
+        
+        .topic-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .topic-actions-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .fix-rls-btn {
+            background-color: #f1f3f4;
+            color: #555;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .fix-rls-btn:hover {
+            background-color: #e8eaed;
+        }
+        
+        .fix-rls-btn i {
+            margin-right: 5px;
+        }
+        
+        .topic-header h2 {
+            color: #4285f4;
+            margin: 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .topic-header h2 i {
+            margin-right: 10px;
+        }
+        
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .topic-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .topic-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .topic-name {
+            font-weight: 500;
+        }
+        
+        .topic-description {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+        
+        .topic-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .topic-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 3px;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+        
+        .edit-btn {
+            color: #4285f4;
+        }
+        
+        .delete-btn {
+            color: #ea4335;
+        }
+        
+        .topic-actions button:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .add-topic-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            max-width: 500px;
+        }
+        
+        .add-topic-form input, .add-topic-form textarea {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        .add-topic-form textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        
+        .add-topic-btn-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .add-topic-form .add-topic-btn {
+            align-self: flex-end;
+        }
+        
+        .add-topic-btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-topic-btn:hover {
+            background-color: #3367d6;
+        }
+        
+        .topic-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .topic-modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .topic-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .topic-modal-header h3 {
+            margin: 0;
+            color: #4285f4;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #757575;
+        }
+        
+        .topic-modal-form input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .topic-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .cancel-btn {
+            background-color: #f1f3f4;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .save-btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .confirm-modal-content {
+            background-color: #2d2d2d;
+            padding: 25px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            color: white;
+            animation: modalFadeIn 0.3s;
+            text-align: center;
+        }
+        
+        .confirm-modal-message {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+        
+        .confirm-modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .confirm-btn {
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .confirm-ok {
+            background-color: #b3ceff;
+            color: #333;
+        }
+        
+        .confirm-ok:hover {
+            background-color: #d4e3ff;
+        }
+        
+        .confirm-cancel {
+            background-color: #0073e6;
+            color: white;
+        }
+        
+        .confirm-cancel:hover {
+            background-color: #0066cc;
+        }
+        
+        .status-message {
+            display: none;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: fadeInOut 4s forwards;
+        }
+        
+        .status-success {
+            background-color: rgba(52, 168, 83, 0.1);
+            border: 1px solid #34a853;
+            color: #34a853;
+        }
+        
+        .status-error {
+            background-color: rgba(234, 67, 53, 0.1);
+            border: 1px solid #ea4335;
+            color: #ea4335;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+        
+        .topic-modal-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        /* Bulk actions styles */
+        .bulk-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .select-all-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .select-all-container label {
+            margin-left: 5px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .bulk-action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .bulk-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .bulk-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .bulk-btn i {
+            font-size: 14px;
+        }
+        
+        #bulk-download-btn {
+            background-color: #4285f4;
+            color: white;
+        }
+        
+        #bulk-download-btn:hover:not(:disabled) {
+            background-color: #3367d6;
+        }
+        
+        #bulk-delete-btn {
+            background-color: #ea4335;
+            color: white;
+        }
+        
+        #bulk-delete-btn:hover:not(:disabled) {
+            background-color: #d33426;
+        }
+        
+        .select-column {
+            width: 40px;
+            text-align: center;
+        }
+        
+        .assignment-checkbox {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Full-width navigation bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="/static/images/logo.jpg" alt="YVIX Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('admin_dashboard') }}" class="active">HR Dashboard</a></li>
+                <li><a href="{{ url_for('admin_logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Topic Management Section -->
+    <section class="topic-management">
+        <div class="topic-container">
+            <div class="topic-header">
+                <h2><i class="fas fa-list"></i> Topic Management</h2>
+                <div class="topic-actions-container">
+                    <!-- This button is only needed if you experience database permission issues -->
+                    <a href="{{ url_for('admin_fix_rls') }}" class="fix-rls-btn"><i class="fas fa-wrench"></i> Verify Database Access</a>
+                    <!-- This button updates topics with missing descriptions -->
+                    <a href="{{ url_for('update_topics_schema') }}" class="fix-rls-btn"><i class="fas fa-sync"></i> Update Topics Schema</a>
+                    <button class="add-topic-btn" id="show-add-topic-form"><i class="fas fa-plus"></i> Add New Topic</button>
+                </div>
+            </div>
+            
+            <div id="status-message" class="status-message">
+                {% if error_message %}
+                <div class="status-error">
+                    {{ error_message }}
+                    <br>
+                    <small>If you're experiencing database permission issues, try clicking the "Verify Database Access" button above.</small>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="topic-grid">
+                {% for topic in topics %}
+                <div class="topic-item">
+                    <div class="topic-header-row">
+                        <span class="topic-name">{{ topic.name }}</span>
+                        <div class="topic-actions">
+                            <button class="edit-btn" data-topic="{{ topic.name }}" data-id="{{ topic.id }}" data-description="{{ topic.description }}"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn" data-topic="{{ topic.name }}" data-id="{{ topic.id }}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="topic-description">{{ topic.description }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="add-topic-form" id="add-topic-form" style="display: none;">
+                <input type="text" id="new-topic-name" placeholder="Enter new topic name">
+                <textarea id="new-topic-description" placeholder="Enter topic description (optional)" rows="2"></textarea>
+                <button class="add-topic-btn" id="add-topic-submit">Add Topic</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="dashboard-container">
+        <div class="dashboard">
+            <h1>Assignment Dashboard</h1>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="message {{ category }}">
+                            <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label for="topic-filter">Topic:</label>
+                    <select id="topic-filter">
+                        <option value="all">All Topics</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Mobile App Development">Mobile App Development</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="Cloud Computing">Cloud Computing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="submission-filter">Type:</label>
+                    <select id="submission-filter">
+                        <option value="all">All Types</option>
+                        <option value="text">Text</option>
+                        <option value="pdf">PDF</option>
+                        <option value="doc">Document</option>
+                        <option value="image">Image</option>
+                    </select>
+                </div>
+                
+                <div class="search-group">
+                    <input type="text" id="search-input" placeholder="Search by name or college...">
+                    <button id="search-btn">Search</button>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <div class="bulk-actions">
+                    <div class="select-all-container">
+                        <input type="checkbox" id="select-all-checkbox">
+                        <label for="select-all-checkbox">Select All</label>
+                    </div>
+                    <div class="bulk-action-buttons">
+                        <button id="bulk-download-btn" class="bulk-btn" disabled><i class="fas fa-download"></i> Download Selected</button>
+                        <button id="bulk-delete-btn" class="bulk-btn" disabled><i class="fas fa-trash"></i> Delete Selected</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="select-column">Select</th>
+                            <th>Student Name</th>
+                            <th>Topic</th>
+                            <th>College</th>
+                            <th>Submission Type</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for assignment in assignments %}
+                        <tr data-topic="{{ assignment.topic }}" data-type="{{ assignment.file_type }}">
+                            <td class="select-column">
+                                <input type="checkbox" class="assignment-checkbox" data-id="{{ assignment.id }}">
+                            </td>
+                            <td>{{ assignment.student_name }}</td>
+                            <td>{{ assignment.topic }}</td>
+                            <td>{{ assignment.college }}</td>
+                            <td>{{ assignment.file_type|capitalize }}</td>
+                            <td>{% if assignment.created_at is string %}{{ assignment.created_at }}{% else %}{{ assignment.created_at.strftime('%Y-%m-%d %H:%M') }}{% endif %}</td>
+                            <td>
+                                <button class="view-btn" data-id="{{ assignment.id }}">View</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Topic Modal -->
+    <div id="edit-topic-modal" class="topic-modal">
+        <div class="topic-modal-content">
+            <div class="topic-modal-header">
+                <h3>Edit Topic</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="topic-modal-form">
+                <input type="text" id="edit-topic-name" placeholder="Enter topic name">
+                <textarea id="edit-topic-description" placeholder="Enter topic description (optional)" rows="3"></textarea>
+                <input type="hidden" id="original-topic-name">
+                <input type="hidden" id="edit-topic-id">
+                <div class="topic-modal-actions">
+                    <button class="cancel-btn" id="cancel-edit">Cancel</button>
+                    <button class="save-btn" id="save-edit">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirm-modal" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <div class="confirm-modal-message" id="confirm-message"></div>
+            <div class="confirm-modal-actions">
+                <button class="confirm-btn confirm-ok" id="confirm-ok">OK</button>
+                <button class="confirm-btn confirm-cancel" id="confirm-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="assignment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="assignment-details"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 YVIX. All rights reserved.</p>
+    </footer>
+    
+    <script src="/static/js/admin.js"></script>
+    <script>
+        // Topic Management JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show/hide add topic form
+            const showAddFormBtn = document.getElementById('show-add-topic-form');
+            const addTopicForm = document.getElementById('add-topic-form');
+            const statusMessage = document.getElementById('status-message');
+            const confirmModal = document.getElementById('confirm-modal');
+            const confirmMessage = document.getElementById('confirm-message');
+            const confirmOkBtn = document.getElementById('confirm-ok');
+            const confirmCancelBtn = document.getElementById('confirm-cancel');
+            
+            // Auto-hide flash messages after a few seconds
+            const flashMessages = document.querySelectorAll('.message');
+            flashMessages.forEach(message => {
+                setTimeout(() => {
+                    message.style.opacity = '0';
+                    setTimeout(() => {
+                        message.style.display = 'none';
+                    }, 500);
+                }, 4000);
+            });
+            
+            // Multi-select functionality
+            const selectAllCheckbox = document.getElementById('select-all-checkbox');
+            const assignmentCheckboxes = document.querySelectorAll('.assignment-checkbox');
+            const bulkDownloadBtn = document.getElementById('bulk-download-btn');
+            const bulkDeleteBtn = document.getElementById('bulk-delete-btn');
+            
+            // Function to update bulk action buttons state
+            function updateBulkActionButtons() {
+                const checkedBoxes = document.querySelectorAll('.assignment-checkbox:checked');
+                bulkDownloadBtn.disabled = checkedBoxes.length === 0;
+                bulkDeleteBtn.disabled = checkedBoxes.length === 0;
+            }
+            
+            // Select all checkbox functionality
+            selectAllCheckbox.addEventListener('change', function() {
+                assignmentCheckboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+                updateBulkActionButtons();
+            });
+            
+            // Individual checkbox functionality
+            assignmentCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    // If any checkbox is unchecked, uncheck the "select all" checkbox
+                    if (!this.checked) {
+                        selectAllCheckbox.checked = false;
+                    } else {
+                        // Check if all checkboxes are checked
+                        const allChecked = Array.from(assignmentCheckboxes).every(cb => cb.checked);
+                        selectAllCheckbox.checked = allChecked;
+                    }
+                    updateBulkActionButtons();
+                });
+            });
+            
+            // Bulk download functionality
+            bulkDownloadBtn.addEventListener('click', function() {
+                const selectedIds = Array.from(document.querySelectorAll('.assignment-checkbox:checked')).map(cb => cb.getAttribute('data-id'));
+                if (selectedIds.length > 0) {
+                    downloadSelectedAssignments(selectedIds);
+                }
+            });
+            
+            // Bulk delete functionality
+            bulkDeleteBtn.addEventListener('click', function() {
+                const selectedIds = Array.from(document.querySelectorAll('.assignment-checkbox:checked')).map(cb => cb.getAttribute('data-id'));
+                if (selectedIds.length > 0) {
+                    confirmMessage.textContent = `Are you sure you want to delete ${selectedIds.length} selected assignment(s)?`;
+                    confirmModal.style.display = 'flex';
+                    
+                    // Store the selected IDs for deletion
+                    confirmOkBtn.setAttribute('data-action', 'delete-assignments');
+                    confirmOkBtn.setAttribute('data-ids', JSON.stringify(selectedIds));
+                }
+            });
+            
+            // Confirmation modal actions
+            confirmOkBtn.addEventListener('click', function() {
+                const action = this.getAttribute('data-action');
+                
+                if (action === 'delete-assignments') {
+                    const selectedIds = JSON.parse(this.getAttribute('data-ids'));
+                    deleteSelectedAssignments(selectedIds);
+                } else {
+                    // Original topic deletion functionality
+                    const topicName = this.getAttribute('data-topic');
+                    const topicId = this.getAttribute('data-id');
+                    
+                    // Send AJAX request to delete topic
+                    fetch('/admin/topics/delete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCsrfToken()
+                        },
+                        body: JSON.stringify({ id: topicId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            deleteTopicUI(topicName);
+                            showStatusMessage('Topic deleted successfully!', 'success');
+                        } else {
+                            showStatusMessage(data.message || 'Failed to delete topic.', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showStatusMessage('An error occurred while deleting the topic.', 'error');
+                    });
+                }
+                
+                confirmModal.style.display = 'none';
+            });
+            
+            confirmCancelBtn.addEventListener('click', function() {
+                confirmModal.style.display = 'none';
+            });
+            
+            // Function to download selected assignments
+            function downloadSelectedAssignments(assignmentIds) {
+                // Create a form to submit the download request
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/admin/assignments/download';
+                form.style.display = 'none';
+                
+                // Add CSRF token
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = 'csrf_token';
+                csrfInput.value = getCsrfToken();
+                form.appendChild(csrfInput);
+                
+                // Add assignment IDs
+                const idsInput = document.createElement('input');
+                idsInput.type = 'hidden';
+                idsInput.name = 'assignment_ids';
+                idsInput.value = JSON.stringify(assignmentIds);
+                form.appendChild(idsInput);
+                
+                // Submit the form
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+            }
+            
+            // Function to delete selected assignments
+            function deleteSelectedAssignments(assignmentIds) {
+                fetch('/admin/assignments/delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCsrfToken()
+                    },
+                    body: JSON.stringify({ assignment_ids: assignmentIds })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove deleted assignments from the table
+                        assignmentIds.forEach(id => {
+                            const checkbox = document.querySelector(`.assignment-checkbox[data-id="${id}"]`);
+                            if (checkbox) {
+                                const row = checkbox.closest('tr');
+                                if (row) {
+                                    row.remove();
+                                }
+                            }
+                        });
+                        
+                        // Update bulk action buttons
+                        updateBulkActionButtons();
+                        
+                        // Show success message
+                        showStatusMessage(`Successfully deleted ${assignmentIds.length} assignment(s)`, 'success');
+                    } else {
+                        showStatusMessage(data.message || 'Failed to delete assignments', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showStatusMessage('An error occurred while deleting assignments', 'error');
+                });
+            }
+            
+            // Hide the fix database button if no errors are present
+            const fixRlsBtn = document.querySelector('.fix-rls-btn');
+            const updateSchemaBtn = document.querySelectorAll('.fix-rls-btn')[1];
+            if (!document.querySelector('.status-error')) {
+                if (fixRlsBtn) fixRlsBtn.style.display = 'none';
+                // Keep the update schema button visible as it might be needed
+            }
+            
+            showAddFormBtn.addEventListener('click', function() {
+                addTopicForm.style.display = addTopicForm.style.display === 'none' ? 'flex' : 'none';
+            });
+            
+            // Add new topic
+            const addTopicSubmit = document.getElementById('add-topic-submit');
+            const newTopicInput = document.getElementById('new-topic-name');
+            const newTopicDescription = document.getElementById('new-topic-description');
+            
+            addTopicSubmit.addEventListener('click', function() {
+                const topicName = newTopicInput.value.trim();
+                const topicDescription = newTopicDescription.value.trim();
+                if (topicName) {
+                    // Send AJAX request to add topic
+                    console.log("Adding topic:", topicName, "Description:", topicDescription);
+                    fetch('/admin/topics/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCsrfToken()
+                        },
+                        body: JSON.stringify({ name: topicName, description: topicDescription })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log("Topic added successfully:", data);
+                            addNewTopic(topicName, data.topic_id, topicDescription);
+                            newTopicInput.value = '';
+                            newTopicDescription.value = '';
+                            addTopicForm.style.display = 'none';
+                            showStatusMessage('Topic added successfully!', 'success');
+                        } else {
+                            console.error("Failed to add topic:", data);
+                            showStatusMessage(data.message || 'Failed to add topic.', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showStatusMessage('An error occurred while adding the topic.', 'error');
+                    });
+                }
+            });
+            
+            // Edit topic
+            const editBtns = document.querySelectorAll('.edit-btn');
+            const editModal = document.getElementById('edit-topic-modal');
+            const closeModalBtn = editModal.querySelector('.close-modal');
+            const cancelEditBtn = document.getElementById('cancel-edit');
+            const saveEditBtn = document.getElementById('save-edit');
+            const editTopicInput = document.getElementById('edit-topic-name');
+            const editTopicDescription = document.getElementById('edit-topic-description');
+            const originalTopicInput = document.getElementById('original-topic-name');
+            const editTopicId = document.getElementById('edit-topic-id');
+            
+            editBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const topicName = this.getAttribute('data-topic');
+                    const topicId = this.getAttribute('data-id');
+                    const topicDescription = this.getAttribute('data-description') || '';
+                    console.log("Edit topic:", topicName, "Description:", topicDescription);
+                    editTopicInput.value = topicName;
+                    editTopicDescription.value = topicDescription;
+                    originalTopicInput.value = topicName;
+                    editTopicId.value = topicId;
+                    editModal.style.display = 'flex';
+                });
+            });
+            
+            closeModalBtn.addEventListener('click', function() {
+                editModal.style.display = 'none';
+            });
+            
+            cancelEditBtn.addEventListener('click', function() {
+                editModal.style.display = 'none';
+            });
+            
+            saveEditBtn.addEventListener('click', function() {
+                const newName = editTopicInput.value.trim();
+                const newDescription = editTopicDescription.value.trim();
+                const originalName = originalTopicInput.value;
+                const topicId = editTopicId.value;
+                
+                if (newName) {
+                    // Send AJAX request to update topic
+                    fetch('/admin/topics/update', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCsrfToken()
+                        },
+                        body: JSON.stringify({
+                            id: topicId,
+                            name: newName,
+                            description: newDescription
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            updateTopicUI(originalName, newName, topicId, newDescription);
+                            showStatusMessage('Topic updated successfully!', 'success');
+                        } else {
+                            showStatusMessage(data.message || 'Failed to update topic.', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showStatusMessage('An error occurred while updating the topic.', 'error');
+                    });
+                }
+                
+                editModal.style.display = 'none';
+            });
+            
+            // Delete topic
+            const deleteBtns = document.querySelectorAll('.delete-btn');
+            
+            deleteBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const topicName = this.getAttribute('data-topic');
+                    const topicId = this.getAttribute('data-id');
+                    
+                    // Show confirmation modal
+                    confirmMessage.textContent = `Are you sure you want to delete the topic "${topicName}"?`;
+                    confirmModal.style.display = 'flex';
+                    
+                    // Store the topic info for deletion
+                    confirmOkBtn.setAttribute('data-topic', topicName);
+                    confirmOkBtn.setAttribute('data-id', topicId);
+                });
+            });
+            
+            // Helper functions
+            function addNewTopic(name, topicId, description = '') {
+                const topicGrid = document.querySelector('.topic-grid');
+                const newTopicItem = document.createElement('div');
+                newTopicItem.className = 'topic-item';
+                newTopicItem.innerHTML = `
+                    <div class="topic-header-row">
+                        <span class="topic-name">${name}</span>
+                        <div class="topic-actions">
+                            <button class="edit-btn" data-topic="${name}" data-id="${topicId}" data-description="${description}"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn" data-topic="${name}" data-id="${topicId}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="topic-description">${description}</div>
+                `;
+                
+                topicGrid.appendChild(newTopicItem);
+                
+                // Add event listeners to new buttons
+                const newEditBtn = newTopicItem.querySelector('.edit-btn');
+                const newDeleteBtn = newTopicItem.querySelector('.delete-btn');
+                
+                newEditBtn.addEventListener('click', function() {
+                    const topicName = this.getAttribute('data-topic');
+                    const topicId = this.getAttribute('data-id');
+                    const topicDescription = this.getAttribute('data-description');
+                    editTopicInput.value = topicName;
+                    editTopicDescription.value = topicDescription;
+                    originalTopicInput.value = topicName;
+                    editTopicId.value = topicId;
+                    editModal.style.display = 'flex';
+                });
+                
+                newDeleteBtn.addEventListener('click', function() {
+                    const topicName = this.getAttribute('data-topic');
+                    const topicId = this.getAttribute('data-id');
+                    
+                    // Show confirmation modal
+                    confirmMessage.textContent = `Are you sure you want to delete the topic "${topicName}"?`;
+                    confirmModal.style.display = 'flex';
+                    
+                    // Store the topic info for deletion
+                    confirmOkBtn.setAttribute('data-topic', topicName);
+                    confirmOkBtn.setAttribute('data-id', topicId);
+                });
+                
+                // Update the dropdown options
+                updateDropdownOptions();
+            }
+            
+            function updateTopicUI(oldName, newName, topicId, newDescription) {
+                console.log("Updating topic UI:", oldName, "->", newName, "Description:", newDescription);
+                // Update the topic item in the grid
+                const topicItems = document.querySelectorAll('.topic-item');
+                
+                topicItems.forEach(item => {
+                    const nameSpan = item.querySelector('.topic-name');
+                    if (nameSpan.textContent === oldName) {
+                        // Update the name
+                        nameSpan.textContent = newName;
+                        
+                        // Update data attributes on buttons
+                        const editBtn = item.querySelector('.edit-btn');
+                        const deleteBtn = item.querySelector('.delete-btn');
+                        
+                        editBtn.setAttribute('data-topic', newName);
+                        deleteBtn.setAttribute('data-topic', newName);
+                        editBtn.setAttribute('data-id', topicId);
+                        deleteBtn.setAttribute('data-id', topicId);
+                        editBtn.setAttribute('data-description', newDescription);
+                        
+                        // Update the description text
+                        const descriptionDiv = item.querySelector('.topic-description');
+                        if (descriptionDiv) {
+                            descriptionDiv.textContent = newDescription;
+                        }
+                    }
+                });
+                
+                // Update the dropdown options
+                updateDropdownOptions();
+            }
+            
+            function deleteTopicUI(name) {
+                // Remove the topic item from the grid
+                const topicItems = document.querySelectorAll('.topic-item');
+                
+                topicItems.forEach(item => {
+                    const nameSpan = item.querySelector('.topic-name');
+                    if (nameSpan.textContent === name) {
+                        item.remove();
+                    }
+                });
+                
+                // Update the dropdown options
+                updateDropdownOptions();
+            }
+            
+            function updateDropdownOptions() {
+                // Get all current topic names
+                const topicNames = [];
+                const topicItems = document.querySelectorAll('.topic-item');
+                
+                topicItems.forEach(item => {
+                    const nameSpan = item.querySelector('.topic-name');
+                    const descriptionDiv = item.querySelector('.topic-description');
+                    topicNames.push({
+                        name: nameSpan.textContent,
+                        description: descriptionDiv ? descriptionDiv.textContent : ''
+                    });
+                });
+                
+                // Update the topic filter dropdown
+                const topicFilter = document.getElementById('topic-filter');
+                
+                // Clear existing options except "All Topics"
+                while (topicFilter.options.length > 1) {
+                    topicFilter.remove(1);
+                }
+                
+                // Add new options
+                topicNames.forEach(topic => {
+                    const option = document.createElement('option');
+                    option.value = topic.name;
+                    option.textContent = topic.name;
+                    option.setAttribute('data-description', topic.description);
+                    topicFilter.appendChild(option);
+                });
+            }
+            
+            function showStatusMessage(message, type) {
+                statusMessage.textContent = message;
+                statusMessage.className = `status-message status-${type}`;
+                statusMessage.style.display = 'block';
+                
+                // Hide the message after animation completes
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 4000);
+            }
+            
+            function getCsrfToken() {
+                // Get CSRF token from meta tag
+                return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            }
+        });
+    </script>
+</body>
+</html> 
