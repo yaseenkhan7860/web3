@@ -1,5 +1,5 @@
 // Configuration
-const API_URL = 'https://your-flask-app-url.com'; // Replace with your deployed Flask API URL
+const API_URL = 'https://yvix-assignment-portal.onrender.com'; // Replace with your deployed Flask API URL on Render
 
 // DOM Elements
 const assignmentForm = document.getElementById('assignment-form');
