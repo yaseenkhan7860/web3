@@ -2,110 +2,113 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#4285f4">
-    <title>YVIX Assignment Portal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YVIX Portal</title>
+    <style>
+        body {
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .cover-panel {
+            background-color: white;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .logo-container {
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            order: 2;
+            width: 100%;
+        }
+        
+        .logo-container img {
+            max-width: 180px;
+            height: auto;
+            border: 1px solid #000;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .hr-btn-container {
+            order: 1;
+            width: 100%;
+        }
+        
+        .student-btn-container {
+            order: 3;
+            width: 100%;
+        }
+        
+        .cover-btn {
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hr-btn, .student-btn {
+            background-color: #4285f4;
+            color: white;
+        }
+        
+        .hr-btn:hover, .student-btn:hover {
+            background-color: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .cover-footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #757575;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <!-- Full-width navigation bar -->
-    <nav class="top-nav">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="logo.jpg" alt="YVIX Logo">
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="submit.html">Submit Assignment</a></li>
-                <li><a href="admin.html">Admin Login</a></li>
-            </ul>
+    <div class="cover-panel">
+        <div class="hr-btn-container">
+            <a href="admin_login.html" class="cover-btn hr-btn">YVIX HR Login</a>
         </div>
-    </nav>
-
-    <!-- Hero section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Welcome to YVIX Assignment Portal</h1>
-            <p>A simple and efficient way to submit and manage your assignments</p>
-            <a href="submit.html" class="cta-button">Submit Assignment</a>
+        
+        <div class="logo-container">
+            <img src="logo.jpg" alt="YVIX Logo">
         </div>
-    </section>
-
-    <!-- Assignment brief section -->
-    <section class="assignment-brief" id="submit-section">
-        <div class="brief-container">
-            <div class="brief-content">
-                <h2>Assignment Description</h2>
-                <p>This project series is all about putting your skills into action—whether you love coding, designing, creating content, or exploring cutting-edge tech. Each assignment is designed to feel like a real-world challenge, giving you the chance to build something tangible while stretching your creativity. You might find yourself developing a password generator, designing a sleek app interface, producing a short tech explainer video, or even crafting memes that make fellow coders laugh. The goal isn't just to test what you've learned but to help you create work you're proud to share. Think of these as more than just tasks—they're stepping stones to building a portfolio that shows off what you can do.</p>
-                <p> We want to see your best work—clean, well-organized, and thoughtfully put together. Whether it's code, a design mockup, or a written piece, make sure it reflects your skills and effort. Most importantly, these assignments are about growth. By the end, you'll have hands-on experience, a stronger skill set, and maybe even a few projects to show off in interviews or on LinkedIn. Let's make something great!</p>
-            </div>
-            <div class="brief-image">
-                <img src="pro.jpg" alt="Assignment Visual">
-            </div>
+        
+        <div class="student-btn-container">
+            <a href="submit_assignment.html" class="cover-btn student-btn">Submit Assignment</a>
         </div>
-    </section>
-
-    <!-- Features section -->
-    <section class="features">
-        <div class="features-container">
-            <h2>Portal Features</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-upload"></i>
-                    </div>
-                    <h3>Easy Submission</h3>
-                    <p>Submit your assignments with a simple form. Upload files or enter text directly.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>Track Progress</h3>
-                    <p>Monitor your submission status and receive feedback from instructors.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3>Deadline Reminders</h3>
-                    <p>Never miss a deadline with our built-in notification system.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="submit.html">Submit Assignment</a></li>
-                    <li><a href="admin.html">Admin Login</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p><i class="fas fa-envelope"></i> support@yvix.com</p>
-                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 YVIX. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
     
-    <script src="app.js"></script>
+    <div class="cover-footer">
+        <p>&copy; 2025 YVIX. All rights reserved.</p>
+    </div>
 </body>
 </html> 

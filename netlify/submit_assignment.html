@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Assignment - YVIX</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: white;
+        }
+        
+        .top-nav {
+            background-color: #4285f4;
+            width: 100%;
+            padding: 15px 0;
+            margin: 0;
+            position: relative;
+            overflow: visible;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 0 0;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-right: auto;
+            padding-right: -10px;
+            padding-left: 0;
+            margin-left: -80px;
+            position: relative;
+            left: -40px;
+        }
+        
+        .logo img {
+            height: 65px;
+            padding: 1px;
+            border: 1px solid #000;
+            border-radius: 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            justify-content: flex-end;
+        }
+        
+        .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .assignment-brief {
+            background-color: #f8f9fa;
+            padding: 30px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .brief-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            align-items: center;
+        }
+        
+        .brief-content {
+            flex: 1.5;
+            padding-right: 40px;
+        }
+        
+        .brief-image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 15px;
+        }
+        
+        .brief-image img {
+            max-width: 100%;
+            max-height: 380px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #000;
+        }
+        
+        .brief-content h2 {
+            color: #4285f4;
+            margin-bottom: 15px;
+        }
+        
+        .brief-content p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .submission-container {
+            background-color: white;
+            padding: 40px 0;
+        }
+        
+        .submission-form {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        .topic-description-box {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #4285f4;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Full-width navigation bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="/static/images/logo.jpg" alt="YVIX Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('submit_assignment_page') }}" class="active">Submit Assignment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Assignment brief section -->
+    <section class="assignment-brief">
+        <div class="brief-container">
+            <div class="brief-content">
+                <h2>Assignment Description</h2>
+                <p>This assignment requires you to demonstrate your understanding of web development concepts and practices. You will need to create a responsive website that showcases your skills in HTML, CSS, and JavaScript.</p>
+                <p>Your submission should include all source code files, documentation explaining your approach, and any additional resources used in the project. Make sure to follow best practices for code organization and commenting.</p>
+                <p>The deadline for this assignment is <strong>June 15, 2025</strong>. Late submissions may be subject to penalties as outlined in the course syllabus.</p>
+            </div>
+            <div class="brief-image">
+                <img src="/static/images/pro.jpg" alt="Assignment Visual">
+            </div>
+        </div>
+    </section>
+
+    <main class="submission-container">
+        <div class="submission-form">
+            <div class="form-header">
+                <h1>Submit Your Assignment</h1>
+                <p class="form-subtitle">Fill in your information and upload your assignment</p>
+            </div>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="message {{ category }}">
+                            <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <div id="status-message" class="message" style="display: none;"></div>
+            
+            <form id="assignment-form" action="https://python-web-p5sz.onrender.com/submit-assignment" method="POST" enctype="multipart/form-data">
+                <div class="form-section">
+                    <h2><i class="fas fa-user"></i> Personal Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="student-name">Full Name</label>
+                            <input type="text" id="student-name" name="student_name" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone_number" placeholder="Enter your phone number" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="college">College Name</label>
+                            <input type="text" id="college" name="college" placeholder="Enter your college name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" name="location" placeholder="Enter your location" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2><i class="fas fa-book"></i> Assignment Details</h2>
+                    <div class="form-group">
+                        <label for="topic">Topic</label>
+                        <select id="topic" name="topic" required>
+                            <option value="" disabled selected>Select topic</option>
+                            {% for topic in topics %}
+                            <option value="{{ topic.name }}" data-description="{{ topic.description }}">{{ topic.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <div id="topic-description" class="topic-description-box" style="display: none;"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="submission-type">Submission Type</label>
+                        <div class="submission-toggle">
+                            <div class="toggle-option" data-value="file">
+                                <i class="fas fa-file"></i> File Upload
+                            </div>
+                            <div class="toggle-option" data-value="text">
+                                <i class="fas fa-keyboard"></i> Text Submission
+                            </div>
+                            <input type="hidden" id="submission-type" name="submission_type" required>
+                        </div>
+                    </div>
+                    
+                    <div id="text-submission" class="form-group">
+                        <label for="text-content">Your Submission</label>
+                        <textarea id="text-content" name="text_content" rows="8" placeholder="Type your assignment here..."></textarea>
+                    </div>
+                    
+                    <div id="file-submission" class="form-group" style="display: none;">
+                        <label for="file-upload">Upload File</label>
+                        <div class="file-upload-container">
+                            <input type="file" id="file-upload" name="file_upload" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            <div class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Drag & drop your file or click to browse</span>
+                                <small>Supported formats: PDF, DOC, DOCX, JPG, JPEG, PNG (Max 16MB)</small>
+                            </div>
+                        </div>
+                        <div id="file-preview" class="file-preview"></div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Submit Assignment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 YVIX. All rights reserved.</p>
+    </footer>
+    
+    <script src="/static/js/main.js"></script>
+</body>
+</html> 

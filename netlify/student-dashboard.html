@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YVIX Student Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="login-success-message" id="login-success">Successfully logged in!</div>
+    
+    <nav class="top-nav">
+        <div class="nav-logo">
+            <img src="/static/images/logo.jpg" alt="YVIX Logo" class="nav-logo-img">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">Assignments</a></li>
+            <li><a href="#">Profile</a></li>
+        </ul>
+        <div class="nav-user">
+            <span id="student-name">Student</span>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container dashboard-container">
+        <h1>Student Information</h1>
+        
+        <form id="student-info-form" class="dashboard-form">
+            <div class="form-section">
+                <h2>Personal Information</h2>
+                <div class="form-group">
+                    <label for="username">Full Name</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email ID</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="college">College Name</label>
+                    <input type="text" id="college" name="college" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hometown">Home Town Location</label>
+                    <input type="text" id="hometown" name="hometown" required>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2>Skills & Interests</h2>
+                
+                <div class="form-group">
+                    <label>Skills</label>
+                    <div class="checkbox-container">
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="skills" value="programming"> Programming
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="skills" value="web-development"> Web Development
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="skills" value="data-analysis"> Data Analysis
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="skills" value="design"> Design
+                            </label>
+                        </div>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="skills" value="communication"> Communication
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="skills" value="leadership"> Leadership
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="skills" value="problem-solving"> Problem Solving
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="skills" value="teamwork"> Teamwork
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Interests</label>
+                    <div class="checkbox-container">
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="ai-ml"> AI & Machine Learning
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="mobile-dev"> Mobile Development
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="cloud"> Cloud Computing
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="cybersecurity"> Cybersecurity
+                            </label>
+                        </div>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="iot"> IoT
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="blockchain"> Blockchain
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="game-dev"> Game Development
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="data-science"> Data Science
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2>Document Upload</h2>
+                
+                <div class="form-group">
+                    <label for="document-type">Document Type</label>
+                    <select id="document-type" name="document-type" required>
+                        <option value="" disabled selected>Select document type</option>
+                        <option value="1">1 - ID Card</option>
+                        <option value="2">2 - Transcript</option>
+                        <option value="3">3 - Certificate</option>
+                        <option value="4">4 - Resume</option>
+                        <option value="5">5 - Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="upload-container">
+                    <label for="document-upload">Upload Document</label>
+                    <div class="upload-area" id="upload-area">
+                        <input type="file" id="document-upload" name="document-upload" hidden>
+                        <div class="upload-placeholder">
+                            <span class="upload-icon">📁</span>
+                            <p>Click to browse or drag and drop files here</p>
+                            <span class="file-info">Supported formats: PDF, DOC, DOCX, JPG, PNG</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group hidden" id="text-input-container">
+                    <label for="text-input">Additional Information</label>
+                    <textarea id="text-input" name="text-input" rows="5"></textarea>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Save Information</button>
+        </form>
+    </div>
+    
+    <script src="student-dashboard.js"></script>
+</body>
+</html> 
