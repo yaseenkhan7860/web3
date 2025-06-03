@@ -3,7 +3,7 @@
   
 [[redirects]]
   from = "/api/*"
-  to = "https://yvix-assignment-portal.onrender.com/api/:splat"
+  to = "https://python-web-p5sz.onrender.com/api/:splat"
   status = 200
   force = true
   headers = {Access-Control-Allow-Origin = "*"} 
