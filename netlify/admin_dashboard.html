@@ -580,36 +580,46 @@
                 <h2><i class="fas fa-list"></i> Topic Management</h2>
                 <div class="topic-actions-container">
                     <!-- This button is only needed if you experience database permission issues -->
-                    <a href="{{ url_for('admin_fix_rls') }}" class="fix-rls-btn"><i class="fas fa-wrench"></i> Verify Database Access</a>
+                    <a href="#" class="fix-rls-btn"><i class="fas fa-wrench"></i> Verify Database Access</a>
                     <!-- This button updates topics with missing descriptions -->
-                    <a href="{{ url_for('update_topics_schema') }}" class="fix-rls-btn"><i class="fas fa-sync"></i> Update Topics Schema</a>
+                    <a href="#" class="fix-rls-btn"><i class="fas fa-sync"></i> Update Topics Schema</a>
                     <button class="add-topic-btn" id="show-add-topic-form"><i class="fas fa-plus"></i> Add New Topic</button>
                 </div>
             </div>
             
-            <div id="status-message" class="status-message">
-                {% if error_message %}
-                <div class="status-error">
-                    {{ error_message }}
-                    <br>
-                    <small>If you're experiencing database permission issues, try clicking the "Verify Database Access" button above.</small>
-                </div>
-                {% endif %}
-            </div>
+            <div id="status-message" class="status-message"></div>
             
             <div class="topic-grid">
-                {% for topic in topics %}
                 <div class="topic-item">
                     <div class="topic-header-row">
-                        <span class="topic-name">{{ topic.name }}</span>
+                        <span class="topic-name">Cloud Computing</span>
                         <div class="topic-actions">
-                            <button class="edit-btn" data-topic="{{ topic.name }}" data-id="{{ topic.id }}" data-description="{{ topic.description }}"><i class="fas fa-edit"></i></button>
-                            <button class="delete-btn" data-topic="{{ topic.name }}" data-id="{{ topic.id }}"><i class="fas fa-trash"></i></button>
+                            <button class="edit-btn" data-topic="Cloud Computing" data-id="1" data-description="Topics related to Cloud Computing."><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn" data-topic="Cloud Computing" data-id="1"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
-                    <div class="topic-description">{{ topic.description }}</div>
+                    <div class="topic-description">Topics related to Cloud Computing.</div>
                 </div>
-                {% endfor %}
+                <div class="topic-item">
+                    <div class="topic-header-row">
+                        <span class="topic-name">Python Developer</span>
+                        <div class="topic-actions">
+                            <button class="edit-btn" data-topic="Python Developer" data-id="2" data-description="Topics related to python development."><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn" data-topic="Python Developer" data-id="2"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="topic-description">Topics related to python development.</div>
+                </div>
+                <div class="topic-item">
+                    <div class="topic-header-row">
+                        <span class="topic-name">Meme</span>
+                        <div class="topic-actions">
+                            <button class="edit-btn" data-topic="Meme" data-id="3" data-description="Creative meme topics"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn" data-topic="Meme" data-id="3"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="topic-description">Creative meme topics</div>
+                </div>
             </div>
             
             <div class="add-topic-form" id="add-topic-form" style="display: none;">

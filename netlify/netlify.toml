@@ -1,5 +1,6 @@
 [build]
   publish = "./"
+  base = "./"
   
 [[redirects]]
   from = "/api/*"
@@ -7,3 +8,8 @@
   status = 200
   force = true
   headers = {Access-Control-Allow-Origin = "*"} 
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 

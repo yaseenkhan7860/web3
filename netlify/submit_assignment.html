@@ -158,11 +158,11 @@
     <nav class="top-nav">
         <div class="nav-container">
             <div class="logo">
-                <img src="/static/images/logo.jpg" alt="YVIX Logo">
+                <img src="logo.jpg" alt="YVIX Logo">
             </div>
             <ul class="nav-links">
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('submit_assignment_page') }}" class="active">Submit Assignment</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="submit_assignment.html" class="active">Submit Assignment</a></li>
             </ul>
         </div>
     </nav>
@@ -177,7 +177,7 @@
                 <p>The deadline for this assignment is <strong>June 15, 2025</strong>. Late submissions may be subject to penalties as outlined in the course syllabus.</p>
             </div>
             <div class="brief-image">
-                <img src="/static/images/pro.jpg" alt="Assignment Visual">
+                <img src="pro.jpg" alt="Assignment Visual">
             </div>
         </div>
     </section>
@@ -188,17 +188,6 @@
                 <h1>Submit Your Assignment</h1>
                 <p class="form-subtitle">Fill in your information and upload your assignment</p>
             </div>
-            
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="message {{ category }}">
-                            <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
             
             <div id="status-message" class="message" style="display: none;"></div>
             
@@ -234,9 +223,9 @@
                         <label for="topic">Topic</label>
                         <select id="topic" name="topic" required>
                             <option value="" disabled selected>Select topic</option>
-                            {% for topic in topics %}
-                            <option value="{{ topic.name }}" data-description="{{ topic.description }}">{{ topic.name }}</option>
-                            {% endfor %}
+                            <option value="Cloud Computing">Cloud Computing</option>
+                            <option value="python developer">Python Developer</option>
+                            <option value="meme">Meme</option>
                         </select>
                         <div id="topic-description" class="topic-description-box" style="display: none;"></div>
                     </div>
@@ -286,6 +275,6 @@
         <p>&copy; 2025 YVIX. All rights reserved.</p>
     </footer>
     
-    <script src="/static/js/main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html> 
