@@ -2,7 +2,7 @@ services:
   - type: web
     name: yvix-assignment-portal
     env: python
-    buildCommand: pip install supabase flask python-dotenv gunicorn werkzeug flask-cors requests
+    buildCommand: pip install -r requirements-render.txt
     startCommand: gunicorn app:app
     envVars:
       - key: PYTHON_VERSION
