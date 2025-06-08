@@ -587,6 +587,14 @@ footer {
     
     .logo {
         margin-bottom: 15px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .logo img {
+        height: 40px;
+        max-width: 100%;
     }
     
     nav ul {

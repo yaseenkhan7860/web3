@@ -29,7 +29,7 @@
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px 0 0;
+            padding: 0 20px;
             position: relative;
         }
         
@@ -37,11 +37,8 @@
             display: flex;
             align-items: center;
             margin-right: auto;
-            padding-right: -10px;
-            padding-left: 0;
-            margin-left: -80px;
+            padding-right: 10px;
             position: relative;
-            left: -40px;
         }
         
         .logo img {
@@ -49,6 +46,7 @@
             padding: 1px;
             border: 1px solid #000;
             border-radius: 0;
+            max-width: 100%;
         }
         
         .nav-links {
@@ -78,6 +76,32 @@
         
         .nav-links a.active {
             background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Media query for mobile devices */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 10px 20px;
+            }
+            
+            .logo {
+                margin: 0 0 10px 0;
+                padding: 0;
+            }
+            
+            .logo img {
+                height: 50px;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0 10px;
+            }
         }
         
         .assignment-brief {
@@ -172,9 +196,8 @@
         <div class="brief-container">
             <div class="brief-content">
                 <h2>Assignment Description</h2>
-                <p>This assignment requires you to demonstrate your understanding of web development concepts and practices. You will need to create a responsive website that showcases your skills in HTML, CSS, and JavaScript.</p>
-                <p>Your submission should include all source code files, documentation explaining your approach, and any additional resources used in the project. Make sure to follow best practices for code organization and commenting.</p>
-                <p>The deadline for this assignment is <strong>June 15, 2025</strong>. Late submissions may be subject to penalties as outlined in the course syllabus.</p>
+                <p>This project series is all about putting your skills into action—whether you love coding, designing, creating content, or exploring cutting-edge tech. Each assignment is designed to feel like a real-world challenge, giving you the chance to build something tangible while stretching your creativity. You might find yourself developing a password generator, designing a sleek app interface, producing a short tech explainer video, or even crafting memes that make fellow coders laugh. The goal isn't just to test what you've learned but to help you create work you're proud to share. Think of these as more than just tasks—they're stepping stones to building a portfolio that shows off what you can do.</p>
+                <p> We want to see your best work—clean, well-organized, and thoughtfully put together. Whether it's code, a design mockup, or a written piece, make sure it reflects your skills and effort. Most importantly, these assignments are about growth. By the end, you'll have hands-on experience, a stronger skill set, and maybe even a few projects to show off in interviews or on LinkedIn. Let's make something great!</p>
             </div>
             <div class="brief-image">
                 <img src="/static/images/pro.jpg" alt="Assignment Visual">
